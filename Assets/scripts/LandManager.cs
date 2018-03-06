@@ -2,176 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LandManager : MonoBehaviour {
+public class LandManager : MonoBehaviour
+{
+ 
+    public Land startPoint;  //land script 
+    private Transform PlayerTransform; // player position
+    private static bool isCreating = false; //to check if new blocks are adding
 
-    //   public GameObject[] tilePrefabs;
-    //   private Transform PlayerTransform;
-
-    //   private float spawnZ = 0.0f;
-    //   private float spawnX = 0.0f;
-
-
-    //   private float tilelength = 4f;
-    //   private float safeZone = 15.0f;
-    //   private int amnTilesOnScreen = 7;
-    //   private int lastPrefabIndex = 0;
-
-
-    //   private List<GameObject> activeTiles;
-    //// Use this for initialization
-    //private void Start ()
-    //   {
-    //       activeTiles = new List<GameObject>();
-    //       PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
-    //       for(int i=0; i< amnTilesOnScreen;i++)
-    //       {
-    //           if( i < 2)
-    //           {
-    //               SpawnTileZ(0);
-    //               SpawnTileX(0);
-
-    //           }
-    //           else
-    //           {
-    //               SpawnTileZ();
-    //               SpawnTileX();
-
-    //           } 
-    //       }
-    //   }
-
-    //// Update is called once per frame
-    //private void Update ()
-    //   {
-    //	if(PlayerTransform.position.z - safeZone  > (spawnZ - amnTilesOnScreen * tilelength))
-    //       {
-    //           SpawnTileZ();
-    //           DeleteTileZ();
-    //       }
-    //       else if(PlayerTransform.position.x - safeZone > (spawnX - amnTilesOnScreen * tilelength))
-    //       {
-    //           SpawnTileX();
-    //           DeleteTileX();
-    //       }
-
-
-    //   }
-
-    //   private void SpawnTileZ(int prefabIndex = -1)
-    //   {
-    //       GameObject go;
-    //       if(prefabIndex == -1)
-    //       {
-    //           go = Instantiate(tilePrefabs[RandomPrefabIndex()]) as GameObject;
-    //       }
-    //      else
-    //       {
-    //           go = Instantiate(tilePrefabs[prefabIndex]) as GameObject;
-    //       }
-    //       go.transform.SetParent(transform);
-    //       go.transform.position = Vector3.forward * spawnZ;
-    //       spawnZ += tilelength;
-    //       activeTiles.Add(go);
-
-    //   }
-    //   private void DeleteTileZ()
-    //   {
-    //       Destroy(activeTiles[0]);
-    //       activeTiles.RemoveAt(0);
-    //   }
-
-
-    //   private void SpawnTileX(int prefabIndex = -1)
-    //   {
-    //       GameObject go;
-    //       if (prefabIndex == -1)
-    //       {
-    //           go = Instantiate(tilePrefabs[RandomPrefabIndex()]) as GameObject;
-    //       }
-    //       else
-    //       {
-    //           go = Instantiate(tilePrefabs[prefabIndex]) as GameObject;
-    //       }
-    //       go.transform.SetParent(transform);
-    //       go.transform.position = Vector3.right * spawnX;
-    //       spawnX += tilelength;
-    //       activeTiles.Add(go);
-
-    //   }
-    //   private void DeleteTileX()
-    //   {
-    //       Destroy(activeTiles[0]);
-    //       activeTiles.RemoveAt(0);
-    //   }
-
-
-
-    //   private int RandomPrefabIndex()
-    //   {
-    //       if (tilePrefabs.Length <= 1)
-    //           return 0;
-
-    //       int randomIndex = lastPrefabIndex;
-    //       while(randomIndex == lastPrefabIndex)
-    //       {
-    //           randomIndex = Random.Range(0, tilePrefabs.Length);
-    //       }
-
-    //       lastPrefabIndex = randomIndex;
-    //       return randomIndex;
-
-    //   }
-
-    public GameObject Floor;
-    public float FloorLength = 4.0f;
-    public int xSize = 12;
-    public int zSize = 12;
-
-    private Vector3 initialPos;
-    private GameObject FloorHolder;
-     void Start()
+    // Use this for initialization
+    private void Start()
     {
-        Create_floors();
+        foreach (Land x in LandManager.CreateNext(startPoint))
+            foreach (Land y in LandManager.CreateNext(x))
+                foreach (Land z in LandManager.CreateNext(y))
+                    LandManager.CreateNext(z);                     //??
 
+        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform; //adding positions to the player 
 
     }
 
-    void Create_floors()
-    {
-        FloorHolder = new GameObject();
-        FloorHolder.name = "Maze";
-        initialPos = new Vector3((-xSize/2)+FloorLength/2,0,(-zSize/2)+FloorLength/2);
-        Vector3 myPos = initialPos;
-        GameObject TempFloor;
 
-        //for x Axis
-        for(int i=0;i<zSize;i++)
+    public static List<Land> CreateNext(Land land)   //function to create new blocks
+    {
+        print(isCreating);
+        
+        isCreating = true;   //set the bool to true
+        List<GameObject> next = new List<GameObject>();   // create a new list called next
+        int dir = Random.Range(0,4);   //make a random selection from the positions
+        switch (dir)  //how to change directions
         {
-            for(int j=0; j<=xSize;j++)
-            {
-                myPos = new Vector3(initialPos.x+(j*FloorLength)-FloorLength/2,0.0f,initialPos.z+(i*FloorLength)-FloorLength/2);
-                TempFloor= Instantiate(Floor, myPos, Quaternion.identity) as GameObject;
-                TempFloor.transform.parent = FloorHolder.transform;
-            }
+            case 0:  //straight 
+                next.Add(Instantiate(land.Path, land.PathSpawnPoints[0].position, land.PathSpawnPoints[0].rotation) as GameObject);
+                break;
+            case 1:  //Left 
+                next.Add(Instantiate(land.Path, land.PathSpawnPoints[1].position, land.PathSpawnPoints[1].rotation) as GameObject);
+                break;
+            case 2:  //Right 
+                next.Add(Instantiate(land.Path, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation)as GameObject);
+                break;
+            case 3:  //Left and Right 
+                next.Add(Instantiate(land.Path, land.PathSpawnPoints[1].position, land.PathSpawnPoints[1].rotation) as GameObject);
+                next.Add(Instantiate(land.Path, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation) as GameObject);
+                break;
         }
 
+        List<Land> landList = new List<Land>();  //create a new list
+        foreach (var x in next)    //    whaaattt isss xxx? is it the directions in next
+        {
+            landList.Add(x.GetComponent<Land>());   //add a new point to land list from land script
+            landList[landList.Count - 1].Root = land;  //??
+        }
 
-        ////for Z Axis
-        //for (int i = 0; i <= zSize; i++)
-        //{
-        //    for (int j = 0; j < xSize; j++)
-        //    {
-        //        myPos = new Vector3(initialPos.x + (j * FloorLength) , 0.0f, initialPos.z + (i * FloorLength) - FloorLength);
-        //        TempFloor=Instantiate(Floor, myPos, Quaternion.Euler(0.0f,90.0f,0.0f)) as GameObject;
-       //        TempFloor.transform.parent = FloorHolder.transform;
-        //    }
-        //}
+        isCreating = false;  //set the bool to false
+        return landList;
+
     }
 
-    private void Update()
+    public static void DeleteLand(Land land)  //remove a script land
     {
-        
+        Destroy(land); // delete script land
     }
+
+    public static void DeleteLandAfterTurn(Land land)
+    {
+    }
+    
 }
+
 

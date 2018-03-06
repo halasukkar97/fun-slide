@@ -42,9 +42,10 @@ GameObject:
   - component: {fileID: 65969347935266512}
   - component: {fileID: 23196607478416434}
   - component: {fileID: 65708340852190658}
+  - component: {fileID: 114900821904160326}
   m_Layer: 0
   m_Name: Lnad4
-  m_TagString: Untagged
+  m_TagString: land4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -402,3 +403,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114900821904160326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614073166793444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873e92c48f598524da838ec77d40ea40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PathSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Path: {fileID: 1614073166793444}
+  Root: {fileID: 0}

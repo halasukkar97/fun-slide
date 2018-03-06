@@ -276,13 +276,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="fun-slide.csproj">
-      <Project>{A2F70880-B2C5-3FC0-0479-52F348016CE1}</Project>
-      <Name>fun-slide</Name>
-    </ProjectReference>
     <ProjectReference Include="fun-slide.Plugins.csproj">
       <Project>{2E65AFD7-D9BA-90DC-8972-5B6BFAC5DB71}</Project>
       <Name>fun-slide.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="fun-slide.csproj">
+      <Project>{A2F70880-B2C5-3FC0-0479-52F348016CE1}</Project>
+      <Name>fun-slide</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
