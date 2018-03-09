@@ -230,6 +230,7 @@
   <ItemGroup>
     <Compile Include="Assets\scripts\Land.cs" />
     <Compile Include="Assets\scripts\LandManager.cs" />
+    <Compile Include="Assets\scripts\PlayerMovment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />

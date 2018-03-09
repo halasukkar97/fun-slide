@@ -4,31 +4,62 @@ using UnityEngine;
 
 public class LandManager : MonoBehaviour
 {
- 
-    public Land startPoint;  //land script 
-    private Transform PlayerTransform; // player position
-    private static bool isCreating = false; //to check if new blocks are adding
+    private static LandManager _self;     // this script
+    public Land startPoint;                   //land script 
+    private Transform PlayerTransform;            // player position
+    private static bool isCreating = false;         //to check if new blocks are adding
+    private static bool _isRunning = false;            //to knwo if the game is running 
+    private static bool _prep = true;                         //
 
+    
     // Use this for initialization
     private void Start()
     {
-        foreach (Land x in LandManager.CreateNext(startPoint))
-            foreach (Land y in LandManager.CreateNext(x))
-                foreach (Land z in LandManager.CreateNext(y))
-                    LandManager.CreateNext(z);                     //??
-
+        _self = this;           //loade this script
+        Land.SetEndPoint(LandManager.CreateNext(LandManager.CreateNext(LandManager.CreateNext(LandManager.CreateNext(LandManager.CreateNext(startPoint, 0)[0],0)[0],0)[0], 0)[0], 0)[0]);   //add 5 straight blocks when the game starts
+        _prep = false;            //set the  ?? bool to false
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform; //adding positions to the player 
 
     }
 
-
-    public static List<Land> CreateNext(Land land)   //function to create new blocks
+    private void OnTriggerEnter(Collider other)    //if the player enters the collider
     {
-        print(isCreating);
-        
+        if (other.tag == "Player")
+            _isRunning = true;   //set the bool to true
+      
+    }
+    public static void CheckForMultipleRoots()  //to knwo if we have more then one roade
+    {
+        List<Land> roots = new List<Land>(); //create a list named roots
+        for (int i = 0; i < _self.transform.childCount; i++)      //??
+        {
+            Land l = _self.transform.GetChild(i).GetComponent<Land>();         //??
+            if (l.Root == null)         //if there is no land script 
+                roots.Add(l);         //add one
+        }
+
+        if(roots.Count >= 2)         //if there is more or two land scripts
+        {
+            while (roots.Count > 1)         // as long as there is more then one
+            {
+                int block = roots[0].lastActivId < roots[1].lastActivId ? 0 : 1;   //??
+                Destroy(roots[block].gameObject);         //remove the block
+                roots.RemoveAt(roots[0].lastActivId < roots[1].lastActivId ? 0 : 1);         //??
+            }
+        }
+    }
+    public static List<Land> CreateNext(Land land, int _dir=-1)   //function to create new blocks
+    {
+        if (land == null || (!_isRunning && !_prep))         //if there is no new blocks or the running bool is false and prep??  is false
+        {
+            List<Land> block = new List<Land>();         //add land list named block
+            block.Add(land);         //add a new block
+            return block;         
+        }
         isCreating = true;   //set the bool to true
         List<GameObject> next = new List<GameObject>();   // create a new list called next
-        int dir = Random.Range(0,4);   //make a random selection from the positions
+        int dir = _dir == -1? Random.Range(0,4) : _dir; //make a random selection from the 4 directions
+
         switch (dir)  //how to change directions
         {
             case 0:  //straight 
@@ -45,27 +76,31 @@ public class LandManager : MonoBehaviour
                 next.Add(Instantiate(land.Path, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation) as GameObject);
                 break;
         }
-
+        
         List<Land> landList = new List<Land>();  //create a new list
-        foreach (var x in next)    //    whaaattt isss xxx? is it the directions in next
+        for(int i=0; i < next.Count; i++)          //??
         {
-            landList.Add(x.GetComponent<Land>());   //add a new point to land list from land script
-            landList[landList.Count - 1].Root = land;  //??
+            next[i].transform.SetParent(land.transform);    //??
+            landList.Add(next[i].GetComponent<Land>());   //add a new point to land list from land script
+            landList[landList.Count - 1].Root = land;  //select the last block
+
+            if (dir != 0) //if the direction is not straight 
+            {
+                Land.FindObjectsOfType<BoxCollider>()[2].enabled = true;  //
+                landList[i]._nextStraight = true;  //add the next block straight
+            }
         }
 
         isCreating = false;  //set the bool to false
-        return landList;
-
+        return landList;         
     }
 
-    public static void DeleteLand(Land land)  //remove a script land
+    public static void DeleteLand(Land land, Land child)  //remove a script land
     {
-        Destroy(land); // delete script land
+        child.transform.SetParent(_self.transform); //remove the block
+        Destroy(land.gameObject); // delete script land
     }
-
-    public static void DeleteLandAfterTurn(Land land)
-    {
-    }
+    
     
 }
 
