@@ -6,19 +6,49 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private Scores score;
 
-    // Back to main menu
-    public void Back()
+    private void Start()
     {
-        SceneManager.LoadScene(0);
+        if (score == null) score = GameObject.FindObjectOfType<Scores>();
+    }
+    private void Music()  //switch music on and off
+    {
+        bool onOfSwitchMusic = gameObject.GetComponent<Toggle>().isOn;
+        if(onOfSwitchMusic)
+        {
+            //music on
+        }
+        else
+        {
+            // music off
+        }
+    }
+
+    private void SounEffects()   //switch sound effects on and off
+    {
+        bool onOfSwitchEffects = gameObject.GetComponent<Toggle>().isOn;
+        if (onOfSwitchEffects)
+        {
+            //effects on
+        }
+        else
+        {
+            // effects off
+        }
+    }
+
+
+    // reset all the game scores 
+    public void Reset()
+    {
+        PlayerPrefs.DeleteKey("Highscore");
+        PlayerPrefs.DeleteKey("MostCoins");
+        PlayerPrefs.DeleteKey("TotalGames");
+
+        Scores.Highscore=0;
+       Scores.MostCoins=0;
+       Scores.TotalGames = 0;
+
     }
 }

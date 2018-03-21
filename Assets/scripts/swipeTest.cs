@@ -6,7 +6,7 @@ public class swipeTest : MonoBehaviour {
 
     public Land land;
     public GameObject Player;
-    public GameObject Camera;
+    
     public float maxTime;
     public float minSwipeDist;
 
@@ -62,13 +62,18 @@ public class swipeTest : MonoBehaviour {
             if (distance.x > 0 && land.rotate==true)
             {
                 Player.GetComponent<PlayerMovment>()._moveRight();
-                Camera.GetComponent<cameraRotation>().SmoothRotateRight();
+                
+                
+                
             }
             //left
             else if (distance.x < 0 && land.rotate == true)
             {
+                
                 Player.GetComponent<PlayerMovment>()._moveLeft();
-                Camera.GetComponent<cameraRotation>().SmoothRotateLeft();
+                
+                
+                
             }
                
 

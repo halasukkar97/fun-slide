@@ -7,10 +7,11 @@ using UnityEngine;
 public class Death : MonoBehaviour {
 
     private Scores score;
-
+    private PlayerMovment Player;
 
     private void Start()
     {
+        if (Player == null) Player = GameObject.FindObjectOfType<PlayerMovment>();
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
 
     }
@@ -20,7 +21,8 @@ public class Death : MonoBehaviour {
         {
             Scores.incresScore = false;   // stop increasing the score
             OnDeath();
-            SceneManager.LoadScene(5);   //change scene
+            PlayerMovment.speed = 10;
+            SceneManager.LoadScene(3);   //change scene
           
         }
     }
@@ -29,9 +31,11 @@ public class Death : MonoBehaviour {
     public void OnDeath()
     {
         //save all the nummbers when player dies
-        PlayerPrefs.SetFloat("Highscore", Mathf.Round(Scores.ScoreCount));
+        PlayerPrefs.SetFloat("Highscore", Mathf.Round(Scores.Highscore));
         PlayerPrefs.SetFloat("MostCoins", Mathf.Round(Scores.MostCoins));
         PlayerPrefs.SetFloat("TotalGames", Mathf.Round(Scores.TotalGames));
-        PlayerPrefs.SetFloat("TotalCoins", Mathf.Round(Scores.TotalCoins));
+        PlayerPrefs.SetInt("Gold", (Scores.Gold));
+
+
     }
 }

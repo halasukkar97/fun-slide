@@ -1,25 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 
 public class EndScene : MonoBehaviour {
 
 
     private Scores score;
-    public Text ScoreText;
-    public Text GoldText;
+    public TMP_Text ScoreText;
+    public TMP_Text GoldText;
 
 
 
     private void Start()
     {
+
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
 
-
-        ScoreText.text = "score: "+ Mathf.Round(Scores.ScoreCount);
-        GoldText.text = "Gold: " + Scores.GoldCount;
+        ScoreText.text = "SCORE: "+ Mathf.Round(Scores.ScoreCount);
+        GoldText.text = "GOLD: " + Scores.GoldCount;
 
 
     }
@@ -33,9 +33,11 @@ public class EndScene : MonoBehaviour {
         //set everything back to 0
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
+        PlayerMovment.timer = 0;
 
         //open the gae scene
         SceneManager.LoadScene(1);
+
 
     }
 
@@ -43,12 +45,16 @@ public class EndScene : MonoBehaviour {
     {
         SceneManager.LoadScene(0);
         Scores.ScoreCount = 0;
+        Scores.GoldCount = 0;
+        PlayerMovment.timer = 0;
     }
 
     public void Shop()    //go to shop scene
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
         Scores.ScoreCount = 0;
+        Scores.GoldCount = 0;
+        PlayerMovment.timer = 0;
     }
 
 

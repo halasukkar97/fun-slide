@@ -16,35 +16,23 @@ public class Menu : MonoBehaviour {
     // main menu buttons
     public void Play()   //start playing game
     {
-        SceneManager.LoadScene(1);
         Scores.incresScore = true;   //start increasing score
         Scores.TotalGames += 1;     //count how many times the user playes
+        SceneManager.LoadScene(1);
+ 
     }
 
-    public void Settings()   //open setting scene
+
+    public void Shop()    //open shop scene
     {
         SceneManager.LoadScene(2);
     }
 
-    public void Shop()    //open shop scene
-    {
-        SceneManager.LoadScene(3);
-    }
-
-    public void Score()    //open score scene
-    {
-        SceneManager.LoadScene(4);
-    }
-
+  
     public void Quit()      //close the game
     {
         Application.Quit();
     }
     
-    // Back to main menu
-    public void Back()
-    {
-        SceneManager.LoadScene(0);
-    }
 
 }

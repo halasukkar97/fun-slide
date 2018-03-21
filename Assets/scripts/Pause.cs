@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 
 public class Pause : MonoBehaviour {
 
     private Scores score;
     private PlayerMovment Player;
-    public Text ScoreText;
-    public Text GoldText;
+
+
+    public TMP_Text ScoreText;
+    public TMP_Text GoldText;
 
     public GameObject Panel;
 
@@ -42,7 +44,9 @@ public class Pause : MonoBehaviour {
         Panel.SetActive(true);
 
         //stop player and camera movements
-        PlayerMovment.speed = 0;
+        PlayerMovment.Pause = true;
+
+
 
     }
 
@@ -53,24 +57,33 @@ public class Pause : MonoBehaviour {
         //set everything back to 0
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
+       
+
+        //returen speed so the player can move
+        PlayerMovment.Pause = false;
+        PlayerMovment.speed = 10;
+        PlayerMovment.timer = 0;
 
         //open the gae scene
         SceneManager.LoadScene(1);
-
-        //returen speed so the player can move
-        PlayerMovment.speed = 10;
 
 
     }
 
     public void MainMenu()   //go to main menu scene
     {
-        SceneManager.LoadScene(0);
+        
         Scores.ScoreCount = 0;
-
+        Scores.GoldCount = 0;
 
         //returen speed so the player can move
         PlayerMovment.speed = 10;
+        PlayerMovment.Pause = false;
+        PlayerMovment.timer = 0;
+
+
+        SceneManager.LoadScene(0);
+
     }
 
 
@@ -78,14 +91,13 @@ public class Pause : MonoBehaviour {
     {
         //hide the panel
         Panel.SetActive(false);
-
-
+        
         //resume the game watch and timer to calculate score and distance   
         Scores.incresScore = true;
 
-
         //resume player and camera movements
-        PlayerMovment.speed = 10;
+        PlayerMovment.Pause = false;
+      
     }
 
 }

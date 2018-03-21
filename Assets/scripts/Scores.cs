@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+
 
 public class Scores : MonoBehaviour {
 
     private EndScene endScene;
-  
+    //public GameObject NewScorePanel;
 
     //game score
-    public Text ScoreText;
-    public Text GoldText;
+    public TMP_Text ScoreText;
+    public TMP_Text GoldText;
 
     public static float ScoreCount;
-    public static float GoldCount;
+    public static int GoldCount;
+    public static int Gold;
 
     public static float PointPerSeconds = 5;
     public static bool incresScore =true;
@@ -20,9 +22,8 @@ public class Scores : MonoBehaviour {
     //scores
     public static float Highscore  =0;
     public static float MostCoins = 0;
-
     public static float TotalGames = 0;
-    public static float TotalCoins = 0;
+
 
     private void Start()
     {
@@ -37,17 +38,26 @@ public class Scores : MonoBehaviour {
         if(incresScore)  //if the bool is true increase the score amount
         { 
             ScoreCount += PointPerSeconds * Time.deltaTime ;
-        
+            Gold += GoldCount;
             if(ScoreCount > Highscore)   //if the score is more then the high score add it to the high score
                 {
                 Highscore = ScoreCount;
-                }
+                PlayerPrefs.SetFloat("Highscore", Mathf.Round(Highscore));
+               
+            }
+
+            if (GoldCount > MostCoins)   //if the gold is more then the MostCoins add it to the MostCoins
+            {
+                MostCoins = GoldCount;
+                PlayerPrefs.SetFloat("MostCoins", Mathf.Round(MostCoins));
+
+            }
 
         }
 
         //show the texts to show the score and gold amount
-        ScoreText.text = "score: " +Mathf.Round( ScoreCount);
-        GoldText.text = "Gold: " + GoldCount;
+        ScoreText.text = "SCORE: " +Mathf.Round( ScoreCount);
+        GoldText.text = "GOLD: " + GoldCount;
 
 
 

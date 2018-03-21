@@ -4,70 +4,21 @@ using UnityEngine;
 
 public class cameraRotation : MonoBehaviour
 {
-    [SerializeField]
-    private float m_rotationAngle;
-    [SerializeField]
-    private float m_rotationSpeed;
-    private Vector3 m_targetRotation;
-
-
-      ///////////////////
-
+    //Positions and speed
+    public Transform player;
+    public Vector3 offSet ;
     public float smoothSpeed = 0.5f;
 
-    //Position
-    public Transform player;
-    public Vector3 offSet;
-
-    //Rotation
-    //Quaternion localRotation;
-    Quaternion leftRotation = Quaternion.Euler(new Vector3(0, 90, 0));
-    Quaternion rightRotation = Quaternion.Euler(new Vector3(0, -90, 0));
-
-    Vector3 lRotation = new Vector3(0.0f, -90f, 0.0f);
-    Vector3 rRotation = new Vector3(0.0f, 90f, 0.0f);
-
-    public void Start()
-    {
-        m_targetRotation = transform.eulerAngles;
-
-
-
-    }
-
-
-
-    void FixedUpdate()
-    {
-        Vector3 desiredPosition = player.position + offSet;
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothPosition;
-        transform.LookAt(player);
-
+ 
+     public void FixedUpdate()
+      {
         
-
-    }
-
-
-    public void SmoothRotateLeft()
-        {
-        // transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(m_targetRotation), m_rotationSpeed);
-
-        // m_targetRotation.y -= m_rotationAngle;
-        transform.Rotate(0, -90, 0);
-
-        transform.LookAt(player);
-
-        }
+        Vector3 desiredPosition = player.transform.TransformPoint(offSet);  //where the camera should be 
+        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);  //change position from old one to new one and rotate with player
+        transform.position = smoothPosition;  //make  a smooth change
+        transform.LookAt(player);   //the camera should be looking at the player as a target
+      }
 
 
-    public void SmoothRotateRight()
-        {
-        // transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(m_targetRotation), m_rotationSpeed);
-
-        // m_targetRotation.y += m_rotationAngle;
-        transform.Rotate(0, 90, 0);
-
-        transform.LookAt(player);
-        }
+    
 }
