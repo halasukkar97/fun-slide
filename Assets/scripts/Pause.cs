@@ -38,15 +38,13 @@ public class Pause : MonoBehaviour {
 
         //stop the game watch and timer to calculate score and distance
         Scores.incresScore = false;
-
-
+        
         //bring the panel
         Panel.SetActive(true);
 
         //stop player and camera movements
         PlayerMovment.Pause = true;
-
-
+       
 
     }
 
@@ -58,7 +56,6 @@ public class Pause : MonoBehaviour {
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
        
-
         //returen speed so the player can move
         PlayerMovment.Pause = false;
         PlayerMovment.speed = 10;
@@ -67,12 +64,10 @@ public class Pause : MonoBehaviour {
         //open the gae scene
         SceneManager.LoadScene(1);
 
-
     }
 
     public void MainMenu()   //go to main menu scene
     {
-        
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
 
@@ -80,7 +75,6 @@ public class Pause : MonoBehaviour {
         PlayerMovment.speed = 10;
         PlayerMovment.Pause = false;
         PlayerMovment.timer = 0;
-
 
         SceneManager.LoadScene(0);
 

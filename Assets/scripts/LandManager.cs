@@ -15,6 +15,7 @@ public class LandManager : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        transform.eulerAngles = Vector3.zero;
         _self = this;           //loade this script
         Land.SetEndPoint(LandManager.CreateNext(LandManager.CreateNext(LandManager.CreateNext(LandManager.CreateNext(LandManager.CreateNext(startPoint, 0)[0],0)[0],0)[0], 0)[0], 0)[0]);   //add 5 straight blocks when the game starts
         _prep = false;            //set the preperation bool to false
@@ -55,6 +56,7 @@ public class LandManager : MonoBehaviour
     }
     public static List<Land> CreateNext(Land land, int[] dirs)   //function to create new blocks
     {
+
         if (land == null || (!_isRunning && !_prep) || dirs.Length == 0)         //if there is no new blocks or the running bool is false and preperation is false
         {
             List<Land> block = new List<Land>();         //add land list named block
@@ -105,7 +107,10 @@ public class LandManager : MonoBehaviour
 
             }
         }
-
+        if (ItemManager.IsAddItem())
+        {
+            ItemManager.AddItem(landList[0].gameObject);
+        }
         isCreating = false;  //set the bool to false
         return landList;         
     }

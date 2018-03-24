@@ -12,8 +12,6 @@ public class Land : MonoBehaviour {
     internal bool _nextStraight = false; //to make the next block straight
     public uint lastActivId = 0;   //setting the last block to ID 0
     private static uint lastActivCounter = 0;   //to add up to the last activated block
-    public GameObject Player;
-    public GameObject Camera;
     public  bool rotate = false;  //bool to check if the player should rotate
     private static swipeTest _swipe;
 

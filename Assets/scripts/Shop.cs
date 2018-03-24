@@ -9,9 +9,9 @@ public class Shop : MonoBehaviour {
     private Scores score;
 
     //coast values
-    public static int SpeedCost ;
-    public static int ShieldCost;
-    public static int MagnetCost;
+    public static int SpeedCost = 1000;
+    public static int ShieldCost = 1000;
+    public static int MagnetCost = 1000;
   
     //how long the powerup will be activated in seconds
     public static int SpeedShow = 2;
@@ -30,8 +30,8 @@ public class Shop : MonoBehaviour {
 
     //to check if the user got all the values
     public static bool SpeedComplited = false;
-    public static bool ShieldComplited = false;
-    public static bool MagnetComplited = false;
+    public static bool  ShieldComplited = false;
+    public static bool  MagnetComplited = false;
 
     //the new values of the powerups
     public TMP_Text SpeedText;
@@ -44,54 +44,44 @@ public class Shop : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        SpeedCost = 1000;
-        ShieldCost = 1000;
-        MagnetCost = 1000;
-
-        PlayerPrefs.SetInt("SpeedCost", (SpeedCost));
-        PlayerPrefs.SetInt("ShieldCost", (ShieldCost));
-        PlayerPrefs.SetInt("MagnetCost", (MagnetCost));
-   
-
-        //type gold amount
-        GoldText.text = "" + PlayerPrefs.GetInt("Gold");
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
+        SaveAndLoad._SaveandLoad.Load();
+        
+            //show values
+
+            if (SpeedComplited)
+            {
+                SpeedText.text = "COMPLETED";
+
+            }
+            else
+                SpeedText.text = "MORE SPEED TIME FOR " + SpeedCost;
 
 
-        //show values
+            if (ShieldComplited)
+            {
+                ShieldText.text = "COMPLETED";
 
-        if (SpeedComplited)
-        { 
-            SpeedText.text = "COMPLETED";
-
-        }
-        else
-        SpeedText.text = "MORE SPEED TIME FOR" + PlayerPrefs.GetInt("SpeedCost");
+            }
+            else
+                ShieldText.text = "MORE SHIELD TIME FOR " +ShieldCost;
 
 
-        if (ShieldComplited)
-        { 
-            ShieldText.text = "COMPLETED";
+            if (MagnetComplited)
+            {
+                MagnetText.text = "COMPLETED";
 
-        }
-        else
-            ShieldText.text = "MORE SHIELD TIME FOR" + PlayerPrefs.GetInt("ShieldCost");
+            }
+            else
+                MagnetText.text = "MORE MAGNET TIME FOR " + MagnetCost;
 
-
-        if (MagnetComplited)
-        { 
-            MagnetText.text = "COMPLETED";
-
-        }
-        else
-            MagnetText.text = "MORE MAGNET TIME FOR" + PlayerPrefs.GetInt("MagnetCost");
+        
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        GoldText.text = "" + PlayerPrefs.GetInt("Gold");
-
+        GoldText.text = "" + Mathf.Round(Scores.GoldAmount);
 
     }
 
@@ -99,39 +89,35 @@ public class Shop : MonoBehaviour {
     {
         //go to main menu scene
         SceneManager.LoadScene(0);
+        SaveAndLoad._SaveandLoad.Save();
 
     }
 
     public void BuySpeed()
     {
-       if (PlayerPrefs.GetInt("Gold")> PlayerPrefs.GetInt("SpeedCost"))
+       if (Scores.GoldAmount >= SpeedCost )
         {
              
-            Scores.Gold -= SpeedCost;
-            //save new gold amount
-            PlayerPrefs.SetInt("Gold", (Scores.Gold));
-            WarningText.text = "";
+            Scores.GoldAmount -= SpeedCost;
+             WarningText.text = "";
             SpeedCost += 2000;
-            //save the costs
-            PlayerPrefs.SetInt("SpeedCost", (SpeedCost));
             SpeedShow += 2;
-            //save activation time
-            PlayerPrefs.SetInt("SpeedShow", (SpeedShow));
-
-            if(SpeedCost==9000)
+            SaveAndLoad._SaveandLoad.Save();
+            if (SpeedCost==9000)
             {
                 //disable buttton and type completed
                 SpeedComplited = true;
-                PlayerPrefs.SetInt("SpeedComplited", (SpeedComplited ? 1 : 0));
                 SpeedText.text = "COMPLETED";
                 SpeedButton.SetActive(false);
                 SpeedButtonText.text="";
+                SaveAndLoad._SaveandLoad.Save();
             }
             else
             {
                 
                 //type that on the screen
-                SpeedText.text = "MORE SPEED TIME FOR" + PlayerPrefs.GetInt("SpeedCost");
+                SpeedText.text = "MORE SPEED TIME FOR " +SpeedCost;
+                SaveAndLoad._SaveandLoad.Save();
             }
             
 
@@ -147,32 +133,31 @@ public class Shop : MonoBehaviour {
 
     public void BuyShield()
     {
-        if (PlayerPrefs.GetInt("Gold") > ShieldCost)
+        if (Scores.GoldAmount >= ShieldCost)
         {
-            Scores.Gold -= ShieldCost;
-            //save new gold amount
-            PlayerPrefs.SetInt("Gold", (Scores.Gold));
+            Scores.GoldAmount -= ShieldCost;
+           
             WarningText.text = "";
             ShieldCost += 2000;
-            //save the costs
-            PlayerPrefs.SetInt("ShieldCost", (ShieldCost));
+            
             ShieldShow += 2;
-            //save activation time
-            PlayerPrefs.SetInt("ShieldShow", (ShieldShow));
+            SaveAndLoad._SaveandLoad.Save();
             //type that on the screen
             if (ShieldCost == 9000)
             {
                 //disable buttton and type completed
                 ShieldComplited = true;
-                PlayerPrefs.SetInt("ShieldComplited", (ShieldComplited ? 1 : 0));
+               
                 ShieldText.text = "COMPLETED";
                 ShieldButton.SetActive(false);
                 ShieldButtonText.text = "";
+                SaveAndLoad._SaveandLoad.Save();
             }
             else
             {
 
-                ShieldText.text = "MORE SHIELD TIME FOR" + PlayerPrefs.GetInt("ShieldCost");
+                ShieldText.text = "MORE SHIELD TIME FOR " + ShieldCost;
+                SaveAndLoad._SaveandLoad.Save();
             }
         }
         else
@@ -189,35 +174,31 @@ public class Shop : MonoBehaviour {
 
     public void BuyMagnet()
     {
-        if (PlayerPrefs.GetInt("Gold") > MagnetCost)
+        if (Scores.GoldAmount >= MagnetCost)
         {
-            Scores.Gold -= MagnetCost;
-            //save new gold amount
-            PlayerPrefs.SetInt("Gold", (Scores.Gold));
+            Scores.GoldAmount -= MagnetCost;
+            
             WarningText.text = "";
             MagnetCost += 2000;
-            //save the costs
-            PlayerPrefs.SetInt("MagnetCost", (MagnetCost));
+          
             MagnetShow += 2;
-            //save activation time
-            PlayerPrefs.SetInt("MagnetShow", (MagnetShow));
+            SaveAndLoad._SaveandLoad.Save();
             //type that on the screen
             if (MagnetCost == 9000)
             {
-                
-                //MagnetComplited = (PlayerPrefs.GetInt("MagnetComplited") != 0);
-
                 //disable buttton and type completed
                 MagnetComplited = true;
-                PlayerPrefs.SetInt("MagnetComplited", (MagnetComplited ? 1 : 0));
+                
                 MagnetText.text = "COMPLETED";
                 MagnetButton.SetActive(false);
                 MagnetButtonText.text = "";
+                SaveAndLoad._SaveandLoad.Save();
             }
             else
             {
 
-                MagnetText.text = "MORE MAGNET TIME FOR" + PlayerPrefs.GetInt("MagnetCost");
+                MagnetText.text = "MORE MAGNET TIME FOR " + MagnetCost;
+                SaveAndLoad._SaveandLoad.Save();
             }
 
         }

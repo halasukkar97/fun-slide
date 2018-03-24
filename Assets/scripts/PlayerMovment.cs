@@ -19,6 +19,7 @@ public class PlayerMovment : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        transform.eulerAngles = Vector3.zero;
         controller = GetComponent<Rigidbody>();    //start with calling the rigibody
         if (scores == null) scores = GameObject.FindObjectOfType<Scores>();
     }
@@ -27,8 +28,6 @@ public class PlayerMovment : MonoBehaviour
     {
         transform.Rotate(0, -90, 0);   //rotate the player 90 to left
         GetComponent<Rigidbody>().velocity = Vector3.zero;  //set the body velocity to 0
-     
-
     }
 
     public void _moveRight()    //when the player swipes right
@@ -36,7 +35,11 @@ public class PlayerMovment : MonoBehaviour
         transform.Rotate(0, 90, 0);   // rotate the player 90 to Right
         GetComponent<Rigidbody>().velocity = Vector3.zero;  //set the body velocity to 0
       
+    }
 
+    public void _Jump()   //when the player swipes Up
+    {
+        GetComponent<Rigidbody>().velocity = new Vector3(0, 10, 0);
     }
 
     private void Update()

@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 
 public class HighScore : MonoBehaviour {
-
-    
     private Scores score;
 
     public TMP_Text High_Score;
@@ -14,16 +12,18 @@ public class HighScore : MonoBehaviour {
     
     // Use this for initialization
     void Start ()
-    {     if (score == null) score = GameObject.FindObjectOfType<Scores>();
+    {
+        if (score == null) score = GameObject.FindObjectOfType<Scores>();
+        SaveAndLoad._SaveandLoad.Load();
 
     }
 
     private void Update()
     {
         //show the high scores
-        High_Score.text = "" + PlayerPrefs.GetFloat("Highscore");
-        Most_Coinst.text = "" + PlayerPrefs.GetFloat("MostCoins");
-        Total_Games.text = "" + PlayerPrefs.GetFloat("TotalGames");
+        High_Score.text = "" + Mathf.Round(Scores.Highscore);
+        Most_Coinst.text = "" + Scores.MostCoins;
+        Total_Games.text = "" + Scores.TotalGames;
     }
 
 

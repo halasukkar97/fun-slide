@@ -39,16 +39,4 @@ public class Settings : MonoBehaviour {
     }
 
 
-    // reset all the game scores 
-    public void Reset()
-    {
-        PlayerPrefs.DeleteKey("Highscore");
-        PlayerPrefs.DeleteKey("MostCoins");
-        PlayerPrefs.DeleteKey("TotalGames");
-
-        Scores.Highscore=0;
-       Scores.MostCoins=0;
-       Scores.TotalGames = 0;
-
-    }
 }

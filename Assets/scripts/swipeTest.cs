@@ -63,16 +63,11 @@ public class swipeTest : MonoBehaviour {
             {
                 Player.GetComponent<PlayerMovment>()._moveRight();
                 
-                
-                
             }
             //left
             else if (distance.x < 0 && land.rotate == true)
             {
-                
                 Player.GetComponent<PlayerMovment>()._moveLeft();
-                
-                
                 
             }
                
@@ -84,7 +79,7 @@ public class swipeTest : MonoBehaviour {
 
             //up
             if (distance.y > 0)
-                Debug.Log("up");
+                Player.GetComponent<PlayerMovment>()._Jump();
 
             //down
             else if (distance.y < 0)

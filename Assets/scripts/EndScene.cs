@@ -22,6 +22,7 @@ public class EndScene : MonoBehaviour {
         GoldText.text = "GOLD: " + Scores.GoldCount;
 
 
+
     }
 
 
@@ -29,7 +30,6 @@ public class EndScene : MonoBehaviour {
     {
         Scores.incresScore = true;  //start incresing the score
         Scores.TotalGames += 1;    //add more game to the total played games
-
         //set everything back to 0
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
@@ -37,7 +37,7 @@ public class EndScene : MonoBehaviour {
 
         //open the gae scene
         SceneManager.LoadScene(1);
-
+        SaveAndLoad._SaveandLoad.Save();
 
     }
 
@@ -47,6 +47,8 @@ public class EndScene : MonoBehaviour {
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
         PlayerMovment.timer = 0;
+        SaveAndLoad._SaveandLoad.Save();
+
     }
 
     public void Shop()    //go to shop scene
@@ -55,6 +57,8 @@ public class EndScene : MonoBehaviour {
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
         PlayerMovment.timer = 0;
+        SaveAndLoad._SaveandLoad.Save();
+
     }
 
 
