@@ -8,6 +8,7 @@ public class EndScene : MonoBehaviour {
 
 
     private Scores score;
+    private SaveAndLoad saveandload;
     public TMP_Text ScoreText;
     public TMP_Text GoldText;
 
@@ -15,8 +16,8 @@ public class EndScene : MonoBehaviour {
 
     private void Start()
     {
-
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
+        if (saveandload == null) saveandload = GameObject.FindObjectOfType<SaveAndLoad>();
 
         ScoreText.text = "SCORE: "+ Mathf.Round(Scores.ScoreCount);
         GoldText.text = "GOLD: " + Scores.GoldCount;
@@ -34,30 +35,32 @@ public class EndScene : MonoBehaviour {
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
         PlayerMovment.timer = 0;
-
+        SaveAndLoad.Save();
         //open the gae scene
         SceneManager.LoadScene(1);
-        SaveAndLoad._SaveandLoad.Save();
+   
 
     }
 
     public void MainMenu()   //go to main menu scene
     {
-        SceneManager.LoadScene(0);
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
         PlayerMovment.timer = 0;
-        SaveAndLoad._SaveandLoad.Save();
+        SaveAndLoad.Save();
+        SceneManager.LoadScene(0);
+      
 
     }
 
     public void Shop()    //go to shop scene
     {
-        SceneManager.LoadScene(2);
         Scores.ScoreCount = 0;
         Scores.GoldCount = 0;
         PlayerMovment.timer = 0;
-        SaveAndLoad._SaveandLoad.Save();
+        SaveAndLoad.Save();
+        SceneManager.LoadScene(2);
+     
 
     }
 

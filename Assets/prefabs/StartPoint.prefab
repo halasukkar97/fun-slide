@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114030672827930604}
   - component: {fileID: 65952656289185778}
   - component: {fileID: 65969127294239258}
+  - component: {fileID: 65236436027374418}
   m_Layer: 0
   m_Name: StartPoint
   m_TagString: Land
@@ -172,19 +173,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1301409636349302}
   m_Mesh: {fileID: 4300000, guid: b7f4cefc5a8dae5449c2be3c7463fdf3, type: 3}
---- !u!65 &65952656289185778
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301409636349302}
-  m_Material: {fileID: 13400000, guid: 28c80e228aca7bf4392b832517a9d4ac, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 16.248684, y: 0.2564525, z: 16.221024}
-  m_Center: {x: 0, y: 0.12822625, z: 0}
---- !u!65 &65969127294239258
+--- !u!65 &65236436027374418
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -196,6 +185,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 16.248684, y: 6.122251, z: 3.898388}
   m_Center: {x: 0, y: 3.0611255, z: -6.161318}
+--- !u!65 &65952656289185778
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301409636349302}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14.941549, y: 0.25714278, z: 17.088562}
+  m_Center: {x: 0.022284508, y: 0.12857139, z: -0.43376875}
+--- !u!65 &65969127294239258
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301409636349302}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 16.298769, y: 6.1091805, z: 11.232395}
+  m_Center: {x: -0.1496017, y: 3.081234, z: 1.8346004}
 --- !u!114 &114030672827930604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,6 +224,6 @@ MonoBehaviour:
   - {fileID: 4300863208922182}
   - {fileID: 4617652230747368}
   - {fileID: 4315995037614006}
-  Path: {fileID: 1301409636349302}
   Root: {fileID: 0}
   lastActivId: 0
+  rotate: 0

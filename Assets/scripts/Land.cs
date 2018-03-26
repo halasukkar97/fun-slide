@@ -5,8 +5,7 @@ using UnityEngine;
 public class Land : MonoBehaviour {
 
     public static List<Land> EndPoints;    //create a list for this scrip
-    public Transform[] PathSpawnPoints;     //create an array for the points that can have a new block road
-    public GameObject Path;     //path is the game object block that is used to create a path 
+    public Transform[] PathSpawnPoints;     //create an array for the points that can have a new block road 
     public Land Root;    //this script 
     private static bool _isCrossway = false;   //bool to know if it is a croos road
     internal bool _nextStraight = false; //to make the next block straight

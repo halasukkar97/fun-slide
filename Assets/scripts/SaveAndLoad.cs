@@ -7,27 +7,28 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveAndLoad : MonoBehaviour {
 
-    public static SaveAndLoad _SaveandLoad;
+    //public  SaveAndLoad _SaveandLoad;
     private Scores score;
     private Shop shop;
 
     private void Awake()
     {
+        Load();
         //delete();
-        if (_SaveandLoad==null)
-        {
-            DontDestroyOnLoad(gameObject);
-            _SaveandLoad = this;
-            Load();
-        }
-        else if(_SaveandLoad!=this)
-        {
-            Destroy(gameObject);
-            Load();
-        }
+        //if (_SaveandLoad==null)
+        //{
+        //    DontDestroyOnLoad(gameObject);
+        //    _SaveandLoad = this;
+        //    Load();
+        //}
+        //else if(_SaveandLoad!=this)
+        //{
+        //    Destroy(gameObject);
+        //    Load();
+        //}
 
 
-        
+
     }
 
     public void Start()
@@ -35,7 +36,8 @@ public class SaveAndLoad : MonoBehaviour {
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
         if (shop == null) shop = GameObject.FindObjectOfType<Shop>();
     }
-    public void Save()
+
+    public static void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
         PlayerData data = new PlayerData();
@@ -74,7 +76,7 @@ public class SaveAndLoad : MonoBehaviour {
     //    File.Delete(Application.persistentDataPath + "/PlayerData.dat");
     //    
     //}
-    public void Load()
+    public static void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/PlayerData.dat")) 
         {

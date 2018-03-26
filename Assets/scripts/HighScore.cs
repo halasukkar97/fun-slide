@@ -6,6 +6,7 @@ using UnityEngine;
 public class HighScore : MonoBehaviour {
     private Scores score;
 
+    private SaveAndLoad saveandload;
     public TMP_Text High_Score;
     public TMP_Text Most_Coinst;
     public TMP_Text Total_Games;
@@ -14,7 +15,8 @@ public class HighScore : MonoBehaviour {
     void Start ()
     {
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
-        SaveAndLoad._SaveandLoad.Load();
+        if (saveandload == null) saveandload = GameObject.FindObjectOfType<SaveAndLoad>();
+        SaveAndLoad.Load();
 
     }
 

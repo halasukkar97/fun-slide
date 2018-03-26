@@ -6,7 +6,8 @@ public class ItemManager : MonoBehaviour {
 
     static ItemManager _self;
 
-    public static GameObject SpawnPositions;
+    [SerializeField]
+    public GameObject SpawnPositions;
     Transform Left { get { return SpawnPositions.transform.GetChild(1); } }
     Transform Center { get { return SpawnPositions.transform.GetChild(0); } }
     Transform Right { get { return SpawnPositions.transform.GetChild(2); } }
@@ -35,14 +36,21 @@ public class ItemManager : MonoBehaviour {
     float nextPowerUp;
 
     int createSometthing = -1;
+
+
+
+
+    private void Awake()
+    {
+        _self = this;
+    }
+
     // Use this for initialization
     void Start () {
-        _self = this;
         nextBlock = BlockFrequency;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         nextBlock -= Time.deltaTime;
 
         if(nextBlock <= 0)
@@ -67,7 +75,7 @@ public class ItemManager : MonoBehaviour {
             nextPowerUp = PowerUpFrequency;
             createSometthing = 1; // let 1 be a PowerUp xP
         }
-
+      
     }
 
     public static bool IsAddItem()
@@ -82,32 +90,35 @@ public class ItemManager : MonoBehaviour {
     /// <param name="go">go is the last new block</param>
     public static void AddItem(GameObject go)
     {
+        print("make something " + _self.createSometthing);
+        var SpawnPositions = _self.SpawnPositions;
         // Create the prefabs for the positions
-        Instantiate(SpawnPositions, SpawnPositions.transform.position, SpawnPositions.transform.rotation);
+        var _Instantiate= Instantiate(SpawnPositions, go.transform.position, go.transform.rotation);
 
         // set go parent to the positions we just created
-        SpawnPositions.transform.SetParent(go.transform);
+        _Instantiate.transform.SetParent(go.transform);
 
 
         // Create the items (coins, power ups, blocks)
         GameObject stuff;
         stuff = ItemManager._self.Coin;
+        print(_self.createSometthing);
         switch (_self.createSometthing)
         {
-            case 1:
+            case 2:
                 stuff = ItemManager._self.Block;
                 break;
-            case 2:
-              stuff = ItemManager._self.PowerUps[2];
+            case 1:
+              stuff = ItemManager._self.PowerUps[Random.Range(0,_self.PowerUps.Length)];
                 break;
            
         }
-        Instantiate(stuff, stuff.transform.position, stuff.transform.rotation);
+        var _instantiateStuff= Instantiate(stuff, Vector3.zero, _Instantiate.transform.rotation);
 
 
         // items  parent ( one of the three positions)
-        stuff.transform.SetParent(SpawnPositions.transform.GetChild(Random.Range(0,2)));
-
+        _instantiateStuff.transform.SetParent(_Instantiate.transform.GetChild(Random.Range(0,3)));
+        _instantiateStuff.transform.localPosition = Vector3.zero;
 
 
         _self.createSometthing = -1;

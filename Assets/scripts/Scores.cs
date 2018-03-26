@@ -56,7 +56,7 @@ public class Scores : MonoBehaviour {
 
         //show the texts to show the score and gold amount
         ScoreText.text = "SCORE: " +Mathf.Round( ScoreCount);
-        GoldText.text = "GOLD: " + GoldCount+ ",," + GoldAmount;
+        GoldText.text = "GOLD: " + GoldCount;
 
 
 

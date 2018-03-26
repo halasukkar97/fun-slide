@@ -1,11 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerMovment : MonoBehaviour
 {
-  
+    //to control the Shield Power up
+    public  bool _isInvincible = false;
+    public GameObject avoid;
+
+    //public GameObject PsSpeed;
+    //public GameObject PsMagnet;
+    //public GameObject PsShield;
+
     private Scores scores;
     public static float speed=10;
     public static float addspeed = 3f;
@@ -19,6 +27,7 @@ public class PlayerMovment : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        print("shield " + _isInvincible);
         transform.eulerAngles = Vector3.zero;
         controller = GetComponent<Rigidbody>();    //start with calling the rigibody
         if (scores == null) scores = GameObject.FindObjectOfType<Scores>();
@@ -57,9 +66,34 @@ public class PlayerMovment : MonoBehaviour
             }
         }
 
+        if(_isInvincible)
+            avoid.GetComponent<BoxCollider>().enabled = false;
+        else
+            avoid.GetComponent<BoxCollider>().enabled = true;
+
     }
 
 
+    void OnCollisionEnter(Collision col)
+    {
+        
+        if (col.gameObject.CompareTag("Die") && _isInvincible)
+        {
+            print("saved");
+            
+            return;
+        }
+        else if(col.gameObject.CompareTag("Die") && _isInvincible==false)
+        {
+            
+            print("not saved");
+            Scores.GoldAmount += Scores.GoldCount;
+            Scores.incresScore = false;   // stop increasing the score
+            speed = 10;
+            SceneManager.LoadScene(3);
+        }
+        
+    }
 
 
     public void FixedUpdate()

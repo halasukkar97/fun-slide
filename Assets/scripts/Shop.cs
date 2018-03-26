@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour {
 
+    private SaveAndLoad saveandload;
+
     private Scores score;
 
     //coast values
@@ -45,7 +47,8 @@ public class Shop : MonoBehaviour {
     // Use this for initialization
     void Start () {
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
-        SaveAndLoad._SaveandLoad.Load();
+        if (saveandload == null) saveandload = GameObject.FindObjectOfType<SaveAndLoad>();
+        SaveAndLoad.Load();
         
             //show values
 
@@ -89,7 +92,7 @@ public class Shop : MonoBehaviour {
     {
         //go to main menu scene
         SceneManager.LoadScene(0);
-        SaveAndLoad._SaveandLoad.Save();
+        SaveAndLoad.Save();
 
     }
 
@@ -102,7 +105,7 @@ public class Shop : MonoBehaviour {
              WarningText.text = "";
             SpeedCost += 2000;
             SpeedShow += 2;
-            SaveAndLoad._SaveandLoad.Save();
+            SaveAndLoad.Save();
             if (SpeedCost==9000)
             {
                 //disable buttton and type completed
@@ -110,14 +113,14 @@ public class Shop : MonoBehaviour {
                 SpeedText.text = "COMPLETED";
                 SpeedButton.SetActive(false);
                 SpeedButtonText.text="";
-                SaveAndLoad._SaveandLoad.Save();
+                SaveAndLoad.Save();
             }
             else
             {
                 
                 //type that on the screen
                 SpeedText.text = "MORE SPEED TIME FOR " +SpeedCost;
-                SaveAndLoad._SaveandLoad.Save();
+                SaveAndLoad.Save();
             }
             
 
@@ -141,7 +144,7 @@ public class Shop : MonoBehaviour {
             ShieldCost += 2000;
             
             ShieldShow += 2;
-            SaveAndLoad._SaveandLoad.Save();
+            SaveAndLoad.Save();
             //type that on the screen
             if (ShieldCost == 9000)
             {
@@ -151,13 +154,13 @@ public class Shop : MonoBehaviour {
                 ShieldText.text = "COMPLETED";
                 ShieldButton.SetActive(false);
                 ShieldButtonText.text = "";
-                SaveAndLoad._SaveandLoad.Save();
+                SaveAndLoad.Save();
             }
             else
             {
 
                 ShieldText.text = "MORE SHIELD TIME FOR " + ShieldCost;
-                SaveAndLoad._SaveandLoad.Save();
+                SaveAndLoad.Save();
             }
         }
         else
@@ -182,7 +185,7 @@ public class Shop : MonoBehaviour {
             MagnetCost += 2000;
           
             MagnetShow += 2;
-            SaveAndLoad._SaveandLoad.Save();
+            SaveAndLoad.Save();
             //type that on the screen
             if (MagnetCost == 9000)
             {
@@ -192,13 +195,13 @@ public class Shop : MonoBehaviour {
                 MagnetText.text = "COMPLETED";
                 MagnetButton.SetActive(false);
                 MagnetButtonText.text = "";
-                SaveAndLoad._SaveandLoad.Save();
+                SaveAndLoad.Save();
             }
             else
             {
 
                 MagnetText.text = "MORE MAGNET TIME FOR " + MagnetCost;
-                SaveAndLoad._SaveandLoad.Save();
+                SaveAndLoad.Save();
             }
 
         }

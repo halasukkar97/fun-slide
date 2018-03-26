@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: 199b2ba499f17594f9feaae7b1d07412
-timeCreated: 1521743880
+timeCreated: 1521918987
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _SpawnPos: {fileID: 1827448375642974, guid: b0585cd245d0f26429988c3aad39970d,
+      type: 2}
+  - Coin: {fileID: 1089384005824580, guid: ceca36e9a723fc0429c8bc3297b02aab, type: 2}
+  - Block: {fileID: 1832816999579802, guid: 45f53b9fa34cccc4fa56b09322515b75, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -11,6 +11,7 @@ public class LandManager : MonoBehaviour
     private static bool _isRunning = false;            //to knwo if the game is running 
     private static bool _prep = true;                      //set a preperation bool
 
+    public GameObject Floor; // is the game object block that is used to create a path 
 
     // Use this for initialization
     private void Start()
@@ -57,11 +58,15 @@ public class LandManager : MonoBehaviour
     public static List<Land> CreateNext(Land land, int[] dirs)   //function to create new blocks
     {
 
-        if (land == null || (!_isRunning && !_prep) || dirs.Length == 0)         //if there is no new blocks or the running bool is false and preperation is false
+        if (land == null || (!_isRunning && !_prep) || dirs.Length == 0) //if there is no new blocks or the running bool is false and preperation is false
         {
-            List<Land> block = new List<Land>();         //add land list named block
-            block.Add(land);         //add a new block
-            return block;         
+            //if( <=10)
+           // { 
+            List<Land> block = new List<Land>();   //add land list named block
+            block.Add(land); //add a new block
+            return block;
+           // }
+
         }
         isCreating = true;   //set the bool to true
         List<GameObject> next = new List<GameObject>();   // create a new list called next a list of GameObjects
@@ -70,20 +75,20 @@ public class LandManager : MonoBehaviour
         switch (dir)  //how to change directions
         {
             case 0:  //straight 
-                next.Add(Instantiate(land.Path, land.PathSpawnPoints[0].position, land.PathSpawnPoints[0].rotation) as GameObject);
+                next.Add(Instantiate(_self.Floor, land.PathSpawnPoints[0].position, land.PathSpawnPoints[0].rotation) as GameObject);
                // land.GetComponents<BoxCollider>()[2].enabled = false;
                 break;
             case 1:  //Left 
-                next.Add(Instantiate(land.Path, land.PathSpawnPoints[1].position, land.PathSpawnPoints[1].rotation) as GameObject);
+                next.Add(Instantiate(_self.Floor, land.PathSpawnPoints[1].position, land.PathSpawnPoints[1].rotation) as GameObject);
                // land.GetComponents<BoxCollider>()[2].enabled = true;
                 break;
             case 2:  //Right 
-                next.Add(Instantiate(land.Path, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation)as GameObject);
+                next.Add(Instantiate(_self.Floor, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation)as GameObject);
                // land.GetComponents<BoxCollider>()[2].enabled = true;
                 break;
             case 3:  //Left and Right 
-                next.Add(Instantiate(land.Path, land.PathSpawnPoints[1].position, land.PathSpawnPoints[1].rotation) as GameObject);
-                next.Add(Instantiate(land.Path, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation) as GameObject);
+                next.Add(Instantiate(_self.Floor, land.PathSpawnPoints[1].position, land.PathSpawnPoints[1].rotation) as GameObject);
+                next.Add(Instantiate(_self.Floor, land.PathSpawnPoints[2].position, land.PathSpawnPoints[2].rotation) as GameObject);
                // land.GetComponents<BoxCollider>()[2].enabled = true;
                 break;
         }
@@ -109,6 +114,7 @@ public class LandManager : MonoBehaviour
         }
         if (ItemManager.IsAddItem())
         {
+            print("create");
             ItemManager.AddItem(landList[0].gameObject);
         }
         isCreating = false;  //set the bool to false

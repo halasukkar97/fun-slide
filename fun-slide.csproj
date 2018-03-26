@@ -234,6 +234,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\scripts\AudioManager.cs" />
     <Compile Include="Assets\scripts\cameraFollow.cs" />
     <Compile Include="Assets\scripts\cameraRotation.cs" />
     <Compile Include="Assets\scripts\Death.cs" />
@@ -243,14 +244,18 @@
     <Compile Include="Assets\scripts\ItemManager.cs" />
     <Compile Include="Assets\scripts\Land.cs" />
     <Compile Include="Assets\scripts\LandManager.cs" />
+    <Compile Include="Assets\scripts\Magnet.cs" />
     <Compile Include="Assets\scripts\Menu.cs" />
     <Compile Include="Assets\scripts\Pause.cs" />
     <Compile Include="Assets\scripts\PlayerMovment.cs" />
+    <Compile Include="Assets\scripts\PowerUps.cs" />
     <Compile Include="Assets\scripts\SaveAndLoad.cs" />
     <Compile Include="Assets\scripts\Scores.cs" />
     <Compile Include="Assets\scripts\Settings.cs" />
     <Compile Include="Assets\scripts\Shop.cs" />
+    <Compile Include="Assets\scripts\Sound.cs" />
     <Compile Include="Assets\scripts\swipeTest.cs" />
+    <Compile Include="Assets\scripts\TaskSwipe.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

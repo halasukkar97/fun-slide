@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114799263927388254}
   m_Layer: 0
   m_Name: coin
-  m_TagString: Untagged
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1089384005824580}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.10222122, y: -4.5119463e-17, z: 0.27932173}
+  m_LocalPosition: {x: 0, y: 1.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0b2ae1e9f59cfee4e8abe46030b4b5bb, type: 2}
+  - {fileID: 2100000, guid: 23ecdb9ea0848a14baabfe3280afa6bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78786d339b82d864dac148331da088a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 1651951927109624, guid: b7d2928fb71e7ce4c8fc8fadd5334ff9, type: 2}
+  ps1: {fileID: 1942992055672070, guid: 5740510ee03781440931f702c11d1dae, type: 2}
+  ps2: {fileID: 1219008057279458, guid: 10bc9f4463e85744e8606c90d7bde31a, type: 2}
+  ps3: {fileID: 1089567120065324, guid: 670459d1e30d62a4bb45b8bb8e47f57f, type: 2}
+  ps4: {fileID: 1817714714845804, guid: 3862f6bde2d9e4d488ce6ce54b59481e, type: 2}
+  less500: 1
+  over500: 0
+  over1000: 0
+  over2500: 0
 --- !u!135 &135778589779911784
 SphereCollider:
   m_ObjectHideFlags: 1
