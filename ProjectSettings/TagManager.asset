@@ -7,6 +7,11 @@ TagManager:
   - Land
   - Coin
   - Die
+  - Speed
+  - Magnet
+  - Shield
+  - Water
+  - MagnetCol
   layers:
   - Default
   - TransparentFX
