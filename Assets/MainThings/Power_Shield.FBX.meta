@@ -1,0 +1,146 @@
+fileFormatVersion: 2
+guid: ec5a924c3f6529f498187adf7f8a1102
+timeCreated: 1522762312
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Box002
+    100002: Capsule001
+    100004: Capsule002
+    100006: Coin
+    100008: Cylinder002
+    100010: CylindSymbackuper002
+    100012: IceCube
+    100014: IceCubes_1
+    100016: IceCubes_2
+    100018: Power_Magnet
+    100020: //RootNode
+    100022: Power_Shield
+    100024: Power_Slow
+    400000: Box002
+    400002: Capsule001
+    400004: Capsule002
+    400006: Coin
+    400008: Cylinder002
+    400010: CylindSymbackuper002
+    400012: IceCube
+    400014: IceCubes_1
+    400016: IceCubes_2
+    400018: Power_Magnet
+    400020: //RootNode
+    400022: Power_Shield
+    400024: Power_Slow
+    2300000: Box002
+    2300002: Capsule001
+    2300004: Capsule002
+    2300006: Coin
+    2300008: Cylinder002
+    2300010: CylindSymbackuper002
+    2300012: IceCube
+    2300014: IceCubes_1
+    2300016: IceCubes_2
+    2300018: Power_Magnet
+    2300020: Power_Shield
+    2300022: Power_Slow
+    2300024: //RootNode
+    3300000: Box002
+    3300002: Capsule001
+    3300004: Capsule002
+    3300006: Coin
+    3300008: Cylinder002
+    3300010: CylindSymbackuper002
+    3300012: IceCube
+    3300014: IceCubes_1
+    3300016: IceCubes_2
+    3300018: Power_Magnet
+    3300020: Power_Shield
+    3300022: Power_Slow
+    3300024: //RootNode
+    4300000: Capsule001
+    4300002: CylindSymbackuper002
+    4300004: Box002
+    4300006: Capsule002
+    4300008: Cylinder002
+    4300010: IceCubes_1
+    4300012: IceCubes_2
+    4300014: IceCube
+    4300016: Coin
+    4300018: Power_Shield
+    4300020: Power_Magnet
+    4300022: Power_Slow
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
