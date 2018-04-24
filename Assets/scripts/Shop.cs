@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine;
 
@@ -11,14 +9,14 @@ public class Shop : MonoBehaviour {
     private Scores score;
 
     //coast values
-    public static int SpeedCost = 1000;
-    public static int ShieldCost = 1000;
-    public static int MagnetCost = 1000;
+    public static int SpeedCost = 500;
+    public static int ShieldCost = 500;
+    public static int MagnetCost = 500;
   
     //how long the powerup will be activated in seconds
-    public static int SpeedShow = 2;
-    public static int ShieldShow = 2;
-    public static int MagnetShow = 2;
+    public static int ShieldShow = 3;
+    public static int MagnetShow = 3;
+    public static int SpeedShow = 4;
 
     //disable buttons
     public GameObject SpeedButton;
@@ -41,11 +39,12 @@ public class Shop : MonoBehaviour {
     public TMP_Text MagnetText;
 
     public TMP_Text GoldText;
-    public TMP_Text WarningText;
+    public GameObject WarningImage;
     
 
     // Use this for initialization
     void Start () {
+        WarningImage.SetActive(false);
         if (score == null) score = GameObject.FindObjectOfType<Scores>();
         if (saveandload == null) saveandload = GameObject.FindObjectOfType<SaveAndLoad>();
         SaveAndLoad.Load();
@@ -58,27 +57,27 @@ public class Shop : MonoBehaviour {
 
             }
             else
-                SpeedText.text = "MORE SPEED TIME FOR " + SpeedCost;
+            SpeedText.text = "PAY " + SpeedCost + " and upgrade for more Slow PowerUp time";
 
 
-            if (ShieldComplited)
+        if (ShieldComplited)
             {
                 ShieldText.text = "COMPLETED";
 
             }
             else
-                ShieldText.text = "MORE SHIELD TIME FOR " +ShieldCost;
+            ShieldText.text = "PAY " + ShieldCost + " and upgrade for more Shield PowerUp time";
 
 
-            if (MagnetComplited)
+        if (MagnetComplited)
             {
                 MagnetText.text = "COMPLETED";
 
             }
             else
-                MagnetText.text = "MORE MAGNET TIME FOR " + MagnetCost;
+            MagnetText.text = "PAY " + MagnetCost + " and upgrade for more Magnet PowerUp time";
 
-        
+
     }
 	
 	// Update is called once per frame
@@ -86,29 +85,58 @@ public class Shop : MonoBehaviour {
     {
         GoldText.text = "" + Mathf.Round(Scores.GoldAmount);
 
+        //tasks to buy powerUps
+        if (SpeedComplited && Tasks.Task_7_completed == false)
+        {
+            Tasks.Task_7_completed = true;
+            Scores.GoldAmount += 200;
+            SaveAndLoad.Save();
+        }
+        if (ShieldComplited && Tasks.Task_14_completed == false)
+        {
+            Tasks.Task_14_completed = true;
+            Scores.GoldAmount += 5000;
+            SaveAndLoad.Save();
+        }
+        if (MagnetComplited && Tasks.Task_20_completed == false)
+        {
+            Tasks.Task_20_completed = true;
+            Scores.GoldAmount += 1000;
+            SaveAndLoad.Save();
+        }
+        if (MagnetComplited&& ShieldComplited && SpeedComplited && Tasks.Task_32_completed == false)
+        {
+            Tasks.Task_32_completed = true;
+            Scores.GoldAmount += 2000;
+            SaveAndLoad.Save();
+        }
+
     }
 
    public void back() 
     {
+       
         //go to main menu scene
         SceneManager.LoadScene(0);
         SaveAndLoad.Save();
 
     }
 
+    //buy more time for the speedpowerups 
     public void BuySpeed()
     {
-       if (Scores.GoldAmount >= SpeedCost )
+       if (Scores.GoldAmount >= SpeedCost )  //if i have enough money 
         {
+            WarningImage.SetActive(false);
+            Scores.GoldAmount -= SpeedCost;  //remove gold
              
-            Scores.GoldAmount -= SpeedCost;
-             WarningText.text = "";
-            SpeedCost += 2000;
-            SpeedShow += 2;
-            SaveAndLoad.Save();
-            if (SpeedCost==9000)
+            SpeedCost += 1500;               //add more to the cost for the next upgrade
+            SpeedShow += 2;                 //add more speed show to get more of the power up
+            SaveAndLoad.Save();                 //save it
+
+            if (SpeedCost==8000)                //if i have it all
             {
-                //disable buttton and type completed
+                //disable buttton and type completed and save at the end
                 SpeedComplited = true;
                 SpeedText.text = "COMPLETED";
                 SpeedButton.SetActive(false);
@@ -119,38 +147,36 @@ public class Shop : MonoBehaviour {
             {
                 
                 //type that on the screen
-                SpeedText.text = "MORE SPEED TIME FOR " +SpeedCost;
+                SpeedText.text = "PAY " +SpeedCost+ " and upgrade for more Slow PowerUp time";
                 SaveAndLoad.Save();
             }
             
 
         }
-        else
+        else  //if there isnt enough money then type this
         {
             
-            WarningText.text = "WARNING: NOT ENOUGH GOLD!!";
+         
+            WarningImage.SetActive(true);
         }
 
 
     }
-
     public void BuyShield()
     {
-        if (Scores.GoldAmount >= ShieldCost)
+        if (Scores.GoldAmount >= ShieldCost)  //if i have enough money 
         {
-            Scores.GoldAmount -= ShieldCost;
-           
-            WarningText.text = "";
-            ShieldCost += 2000;
-            
-            ShieldShow += 2;
-            SaveAndLoad.Save();
-            //type that on the screen
-            if (ShieldCost == 9000)
+            WarningImage.SetActive(false);
+            Scores.GoldAmount -= ShieldCost;    //remove gold
+      
+            ShieldCost += 1500;                  //add more to the cost for the next upgrade
+            ShieldShow += 2;                     //add more shield show to get more of the power up        
+            SaveAndLoad.Save();                  //save it
+            //type that on the screen          
+            if (ShieldCost == 8000)                  //if i have it all
             {
-                //disable buttton and type completed
+                //disable buttton and type completed and save at the end
                 ShieldComplited = true;
-               
                 ShieldText.text = "COMPLETED";
                 ShieldButton.SetActive(false);
                 ShieldButtonText.text = "";
@@ -158,40 +184,34 @@ public class Shop : MonoBehaviour {
             }
             else
             {
-
-                ShieldText.text = "MORE SHIELD TIME FOR " + ShieldCost;
+                //type that on the screen
+                ShieldText.text = "PAY " + ShieldCost + " and upgrade for more Shield PowerUp time";
                 SaveAndLoad.Save();
             }
         }
-        else
+        else //if there isnt enough money then type this
         {
 
-            WarningText.text = "WARNING: NOT ENOUGH GOLD!!";
+           
+            WarningImage.SetActive(true);
         }
 
     }
-
-
-    
-
-
     public void BuyMagnet()
     {
         if (Scores.GoldAmount >= MagnetCost)
         {
-            Scores.GoldAmount -= MagnetCost;
-            
-            WarningText.text = "";
-            MagnetCost += 2000;
-          
-            MagnetShow += 2;
-            SaveAndLoad.Save();
+            WarningImage.SetActive(false);
+            Scores.GoldAmount -= MagnetCost; //remove gold
+       
+            MagnetCost += 1500;               //add more to the cost for the next upgrade
+            MagnetShow += 2;                  //add more magnet show to get more of the power up        
+            SaveAndLoad.Save();               //save it
             //type that on the screen
-            if (MagnetCost == 9000)
+            if (MagnetCost == 8000)               //if i have it all
             {
                 //disable buttton and type completed
                 MagnetComplited = true;
-                
                 MagnetText.text = "COMPLETED";
                 MagnetButton.SetActive(false);
                 MagnetButtonText.text = "";
@@ -199,16 +219,17 @@ public class Shop : MonoBehaviour {
             }
             else
             {
-
-                MagnetText.text = "MORE MAGNET TIME FOR " + MagnetCost;
+                //type that on the screen
+                MagnetText.text = "PAY " + MagnetCost + " and upgrade for more Magnet PowerUp time";
                 SaveAndLoad.Save();
             }
 
         }
         else
         {
-
-            WarningText.text = "WARNING: NOT ENOUGH GOLD!!";
+            //if there isnt enough money then type this
+            
+            WarningImage.SetActive(true);
         }
 
     }

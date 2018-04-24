@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LandManager : MonoBehaviour
@@ -30,9 +29,11 @@ public class LandManager : MonoBehaviour
             _isRunning = true;   //set the bool to true
       
     }
+
     public static void CheckForMultipleRoots()  //to knwo if we have more then one roade
     {
         List<Land> roots = new List<Land>(); //create a list named roots
+
         for (int i = 0; i < _self.transform.childCount; i++)     //we searching in all the child-objects from the LandManager(_self)
         {
             Land l = _self.transform.GetChild(i).GetComponent<Land>();  //we want to look at the <Land> Component so we take it
@@ -47,29 +48,43 @@ public class LandManager : MonoBehaviour
                 //higher id == player was here last 
                 //we compare the first two elemtents and remove the one with the smaller id so block is always 0 or 1
                 int block = roots[0].lastActivId < roots[1].lastActivId ? 0 : 1;   //we check the id that we gave them to see an which path the player went  
+               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+               //3l aghlab hon
+               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 Destroy(roots[block].gameObject);         //Destroy the block
                 roots.RemoveAt(block);      //remove the block index from the list as well 
             }
         }
     }
-    public static List<Land> CreateNext(Land land, int dir) {    //this is to add to list without having to write that thing down every time and create next b having two functions with the same name and difrent parameter(overload)
+
+
+    public static List<Land> CreateNext(Land land, int dir)
+    {    //this is to add to list without having to write that thing down every time and create next b having two functions with the same name and difrent parameter(overload)
         return CreateNext(land, new int[] { dir });
     }
+
+
+
     public static List<Land> CreateNext(Land land, int[] dirs)   //function to create new blocks
     {
 
         if (land == null || (!_isRunning && !_prep) || dirs.Length == 0) //if there is no new blocks or the running bool is false and preperation is false
         {
-            //if( <=10)
-           // { 
+           
+            // print("do not create a new block.");
+           // print("isRunning: " + _isRunning);
+           // print("isprep: " + _prep);
+           // print("land is null: " + (land == null));
             List<Land> block = new List<Land>();   //add land list named block
             block.Add(land); //add a new block
-            return block;
-           // }
+ 
+            return block; 
+           
 
         }
         isCreating = true;   //set the bool to true
         List<GameObject> next = new List<GameObject>();   // create a new list called next a list of GameObjects
+
         int dir = dirs[Random.Range(0,dirs.Length)]; //make a random selection from the 4 directions
 
         switch (dir)  //how to change directions
@@ -94,17 +109,21 @@ public class LandManager : MonoBehaviour
         }
         
         List<Land> landList = new List<Land>();  //create a new list of Land objects
-        for (int i=0; i < next.Count; i++) // next are the elements for the switch things so this are the new blocks
+
+        for (int i = 0; i < next.Count; i++) // next is the elements for the switch things so thies are the new blocks
         {
+
             next[i].transform.SetParent(land.transform);    // take the Land Component from each elemnt in next and save it in landlist
             landList.Add(next[i].GetComponent<Land>());   //add a new point to land list from land script
             landList[landList.Count - 1].Root = land;  //set the last block
 
+         
             if (dir != 0) //if the direction is not straight 
             {
                 land.GetComponents<BoxCollider>()[2].enabled = true;  //activate the sweip collider
                 landList[i]._nextStraight = true;  //add the next block straight
-              
+               
+
             }
             else   //if the roade is not straigt
             {
@@ -114,10 +133,12 @@ public class LandManager : MonoBehaviour
         }
         if (ItemManager.IsAddItem())
         {
-            print("create");
+           // print("create item (coins..");
             ItemManager.AddItem(landList[0].gameObject);
+
         }
         isCreating = false;  //set the bool to false
+        if (landList.Count == 0) throw new System.Exception("no block created");
         return landList;         
     }
 

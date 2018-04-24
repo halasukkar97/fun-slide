@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+
 
 public class swipeTest : MonoBehaviour {
 
     public Land land;
     public GameObject Player;
+    public GameObject Water;
     
     public float maxTime;
     public float minSwipeDist;
@@ -19,7 +20,9 @@ public class swipeTest : MonoBehaviour {
     float swipeDistance;
     float swipeTime;
 
- 
+    bool inputIsEnabled = true;
+    bool JumpInputIsEnabled = true;
+
     // Update is called once per frame
     void Update () {
 
@@ -51,40 +54,79 @@ public class swipeTest : MonoBehaviour {
         }
 
     }
+
+
+    //stop the screen swipe fpr one sec after the player swipes
+    IEnumerator Left()
+    {
+        print("Left");
+        inputIsEnabled = false;
+        yield return new WaitForSeconds(0.2f);
+        inputIsEnabled = true;
+    }
+    IEnumerator Right()
+    {
+        print("right");
+        inputIsEnabled = false;
+        yield return new WaitForSeconds(0.2f);
+        inputIsEnabled = true;
+    }
+    IEnumerator Up()
+    {
+        print("up");
+        JumpInputIsEnabled = false;
+        yield return new WaitForSeconds(2.5f);
+        JumpInputIsEnabled = true;
+    }
+
+
     void Swipe()  //mesure the swipe to know in which direction the swipe was made
     {
         Vector2 distance = endPos - startPos;
-        if(Mathf.Abs(distance.x) > Mathf.Abs(distance.y ))
+        if (inputIsEnabled)   //if the user is allowed to swipe
         {
-            Debug.Log("horizontal");
-
-            //right
-            if (distance.x > 0 && land.rotate==true)
+            if (Mathf.Abs(distance.x) > Mathf.Abs(distance.y))
             {
-                Player.GetComponent<PlayerMovment>()._moveRight();
-                
-            }
-            //left
-            else if (distance.x < 0 && land.rotate == true)
-            {
-                Player.GetComponent<PlayerMovment>()._moveLeft();
-                
-            }
-               
 
+                //right
+                if (distance.x > 0 && land.rotate == true)
+                {
+                    //rotate the player right an stop the swipe 
+                    Player.GetComponent<PlayerMovment>()._moveRight();
+                    StartCoroutine("Right");
+
+                }
+                //left
+                else if (distance.x < 0 && land.rotate == true)
+                {
+                    //rotate the player Left an stop the swipe 
+                    Player.GetComponent<PlayerMovment>()._moveLeft();
+                    StartCoroutine("Left");
+
+                }
+
+
+            }
         }
-        else if(Mathf.Abs(distance.x) < Mathf.Abs(distance.y))
+        else if (Mathf.Abs(distance.x) < Mathf.Abs(distance.y))
         {
-            Debug.Log("vertical");
+            if(JumpInputIsEnabled)  //if allowed to jump jump
+            { 
 
             //up
             if (distance.y > 0)
+            {
+                //make the player Jump an stop the swipe 
                 Player.GetComponent<PlayerMovment>()._Jump();
+                StartCoroutine("Up");
+            }
+
 
             //down
-            else if (distance.y < 0)
-                Debug.Log("down");
+            else if (distance.y < 0) { }
+            // Debug.Log("down");
 
+        }
         }
     }
 }

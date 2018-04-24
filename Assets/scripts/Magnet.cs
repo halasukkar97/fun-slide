@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Magnet : MonoBehaviour {
 
@@ -15,12 +13,12 @@ public class Magnet : MonoBehaviour {
     {
         RaycastHit[] hits;
         Ray r = new Ray(transform.position, transform.forward);
-        hits = Physics.SphereCastAll(r, 7f);
+        hits = Physics.SphereCastAll(r, 15f);
         
         foreach (var x in hits)   
         {
             if (x.collider.CompareTag("Coin"))
-                x.collider.transform.position = Vector3.MoveTowards(x.transform.position, transform.position, 15f * Time.deltaTime);
+                x.collider.transform.position = Vector3.MoveTowards(x.transform.position, transform.position, 12f * Time.deltaTime);
         }
     }
 }

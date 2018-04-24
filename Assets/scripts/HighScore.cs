@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class HighScore : MonoBehaviour {
@@ -20,6 +18,7 @@ public class HighScore : MonoBehaviour {
 
     }
 
+    //show the scores when the plyer open the score scenes
     private void Update()
     {
         //show the high scores

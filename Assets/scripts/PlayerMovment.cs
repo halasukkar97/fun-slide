@@ -1,33 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
-using TMPro;
+
 
 public class PlayerMovment : MonoBehaviour
 {
     //to control the Shield Power up
-    public  bool _isInvincible = false;
-    public GameObject avoid;
+    public static bool _isInvincible = false;
+    public GameObject Cube1;
+    public GameObject Cube2;
+    public GameObject Cube3;
 
-    //public GameObject PsSpeed;
-    //public GameObject PsMagnet;
-    //public GameObject PsShield;
-
+    //control the plyer movement
     private Scores scores;
-    public static float speed=10;
+    public static float speed=15;
     public static float addspeed = 3f;
     public static bool Pause=false;
     public static float  timer = 0;
-    public TMP_Text SpeedText;
     public Land land;
     private Rigidbody controller;
     private Vector3 moveVector;
 
+  
+
     // Use this for initialization
     void Start()
     {
-        print("shield " + _isInvincible);
+
         transform.eulerAngles = Vector3.zero;
         controller = GetComponent<Rigidbody>();    //start with calling the rigibody
         if (scores == null) scores = GameObject.FindObjectOfType<Scores>();
@@ -35,7 +34,7 @@ public class PlayerMovment : MonoBehaviour
 
     public void _moveLeft()    //When the player swipes left
     {
-        transform.Rotate(0, -90, 0);   //rotate the player 90 to left
+         transform.Rotate(0, -90, 0);   //rotate the player 90 to left
         GetComponent<Rigidbody>().velocity = Vector3.zero;  //set the body velocity to 0
     }
 
@@ -48,7 +47,8 @@ public class PlayerMovment : MonoBehaviour
 
     public void _Jump()   //when the player swipes Up
     {
-        GetComponent<Rigidbody>().velocity = new Vector3(0, 10, 0);
+        GetComponent<Rigidbody>().velocity=new Vector3(0,10, 0);
+
     }
 
     private void Update()
@@ -62,34 +62,52 @@ public class PlayerMovment : MonoBehaviour
             {
                 timer = 0;
                 speed += addspeed;  //Add more speed
-                Scores.PointPerSeconds += 1;  //add the score
+                Scores.PointPerSeconds += 2;  //add the score
             }
         }
 
-        if(_isInvincible)
-            avoid.GetComponent<BoxCollider>().enabled = false;
-        else
-            avoid.GetComponent<BoxCollider>().enabled = true;
 
+        //temp for me to control the game from a PC
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            _moveLeft();
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            _moveRight();
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            _Jump();
+           
+        }
+            
+        
     }
 
 
     void OnCollisionEnter(Collision col)
     {
-        
-        if (col.gameObject.CompareTag("Die") && _isInvincible)
+        //control the power ups 
+        if (col.gameObject.CompareTag("Magnet"))
         {
-            print("saved");
-            
+            StartCoroutine("_Magnet");
+        }
+       if (col.gameObject.CompareTag("Shield"))
+        {
+            StartCoroutine("_Shield");
+        }
+         if (col.gameObject.CompareTag("Speed"))
+        {
+            StartCoroutine("_Speed");
+        }
+        if (col.gameObject.CompareTag("Die") && _isInvincible==true)
+        {
             return;
         }
-        else if(col.gameObject.CompareTag("Die") && _isInvincible==false)
+        if(col.gameObject.CompareTag("Die") && _isInvincible==false)
         {
-            
-            print("not saved");
             Scores.GoldAmount += Scores.GoldCount;
             Scores.incresScore = false;   // stop increasing the score
-            speed = 10;
+            speed = 15; 
             SceneManager.LoadScene(3);
         }
         
@@ -103,7 +121,65 @@ public class PlayerMovment : MonoBehaviour
         {
        transform.position += transform.forward * speed * Time.deltaTime;   //make the player keep going forward   
         transform.Translate(Input.acceleration.x, 0, 0);//allow the player to slide left and right when the phone is rotated
-        SpeedText.text = ("SPEED: ") + speed;
         }
     }
+
+
+    IEnumerator _Magnet()
+    {
+        
+        FindObjectOfType<AudioManager>().PlayEffects("PowerUp"); //playe the sound
+        Destroy(GameObject.FindWithTag("Magnet"));  //delete the powerup prefab
+        transform.GetChild(4).gameObject.SetActive(true);
+        //ativate the magnetfield  and the particle around the player
+        transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(0).gameObject.SetActive(true);
+        yield return new WaitForSeconds(Shop.MagnetShow); //wait
+        //diactivate the magnet fild and the particles
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(4).gameObject.SetActive(false);
+        Cube1.GetComponent<BoxCollider>().enabled = true;
+        Cube2.GetComponent<BoxCollider>().enabled = true;
+        Cube3.GetComponent<BoxCollider>().enabled = true;
+
+    }
+
+    IEnumerator _Shield()
+    {
+
+        FindObjectOfType<AudioManager>().PlayEffects("PowerUp"); //playe the sound
+        Destroy(GameObject.FindWithTag("Shield")); //delete the powerup prefab
+        _isInvincible = true;  //make it invincible
+        //diactivate the collider of the iceCubes
+        Cube1.GetComponent<BoxCollider>().enabled = false;
+        Cube2.GetComponent<BoxCollider>().enabled = false;
+        Cube3.GetComponent<BoxCollider>().enabled = false;
+        //add a particle around the player
+        transform.GetChild(2).gameObject.SetActive(true);
+        yield return new WaitForSeconds(Shop.ShieldShow);   //after the show time is done
+        _isInvincible = false; //make it vincibile
+        //activate the collider of the iceCubes
+        Cube1.GetComponent<BoxCollider>().enabled = true;
+        Cube2.GetComponent<BoxCollider>().enabled = true;
+        Cube3.GetComponent<BoxCollider>().enabled = true;
+        transform.GetChild(2).gameObject.SetActive(false);  //remove the particle around the player
+
+    }
+
+    IEnumerator _Speed()
+    {
+        FindObjectOfType<AudioManager>().PlayEffects("PowerUp"); //playe the sound
+        Destroy(GameObject.FindWithTag("Speed"));//delete the powerup prefab
+        speed -= 10; //make the player slower
+        transform.GetChild(3).gameObject.SetActive(true);    //add a particle around the player
+        yield return new WaitForSeconds(Shop.SpeedShow);   //after the show time is done
+        speed += 10; //make the player faster
+        Cube1.GetComponent<BoxCollider>().enabled = true;
+        Cube2.GetComponent<BoxCollider>().enabled = true;
+        Cube3.GetComponent<BoxCollider>().enabled = true;
+        transform.GetChild(3).gameObject.SetActive(false);//remove the particle around the player
+
+    }
+
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemManager : MonoBehaviour {
 
@@ -16,10 +14,10 @@ public class ItemManager : MonoBehaviour {
 
     public GameObject Coin;
     public GameObject[] PowerUps;
-    public  GameObject Block;
+    public GameObject[] Block;
 
     [SerializeField]
-    [Range(1, 30)]
+    [Range(0.5f, 30)]
     float CoinFrequency;
 
     [SerializeField]
@@ -90,7 +88,7 @@ public class ItemManager : MonoBehaviour {
     /// <param name="go">go is the last new block</param>
     public static void AddItem(GameObject go)
     {
-        print("make something " + _self.createSometthing);
+       // print("make something " + _self.createSometthing);
         var SpawnPositions = _self.SpawnPositions;
         // Create the prefabs for the positions
         var _Instantiate= Instantiate(SpawnPositions, go.transform.position, go.transform.rotation);
@@ -102,11 +100,11 @@ public class ItemManager : MonoBehaviour {
         // Create the items (coins, power ups, blocks)
         GameObject stuff;
         stuff = ItemManager._self.Coin;
-        print(_self.createSometthing);
+      //  print("item nummber "+_self.createSometthing+"is created");
         switch (_self.createSometthing)
         {
             case 2:
-                stuff = ItemManager._self.Block;
+                stuff = ItemManager._self.Block[Random.Range(0, _self.Block.Length)];
                 break;
             case 1:
               stuff = ItemManager._self.PowerUps[Random.Range(0,_self.PowerUps.Length)];

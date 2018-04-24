@@ -11,6 +11,8 @@ public class Land : MonoBehaviour {
     internal bool _nextStraight = false; //to make the next block straight
     public uint lastActivId = 0;   //setting the last block to ID 0
     private static uint lastActivCounter = 0;   //to add up to the last activated block
+
+
     public  bool rotate = false;  //bool to check if the player should rotate
     private static swipeTest _swipe;
 
@@ -24,7 +26,7 @@ public class Land : MonoBehaviour {
     {
         if (collider.gameObject.tag == "Player" && GetComponents<BoxCollider>()[2].enabled == false)
             rotate = false;
-        print("rotate is" + rotate);
+        
     }
 
     void OnTriggerEnter(Collider collider) //when the player enters the collider
@@ -33,13 +35,17 @@ public class Land : MonoBehaviour {
         Land standing = this;            //to start with the one the player stands on
         while (standing.Root != null)  // keep counting one block backwards
             standing = standing.Root;   // till it finds the first block and set it 
+        
         standing.lastActivId = lastActivCounter++;  //give id to the last activated block
+     
+        
 
-        if (collider.gameObject.tag == "Player" && GetComponents<BoxCollider>()[2].enabled == true)  //when the player enters the second collider
+        if (collider.gameObject.tag == "Player" && GetComponents<BoxCollider>()[2].enabled == true)  //when the player enters the rotate collider
         {
             rotate = true; //set the bool to true
-            print("rotate is" + rotate);
+            
         }
+       
        
 
             if (_isCrossway)  //if the roade is crossy
@@ -48,32 +54,74 @@ public class Land : MonoBehaviour {
         }
 
 
-        if (transform.childCount >= 5)    //if there are more then 5 blocks
-            _isCrossway = true;           //that means it is a croos Roade
+        int counter = transform.GetComponentsInChildren<Land>().Length;
+     //   print("test counter: " + counter);
+        if (counter >= 7)    //if there are more then 7 blocks after this block
+        {
+          //stop creating new blocks
+            return;
 
+        }
+
+
+        if (transform.childCount >= 5)    //if there are more then 5 blocks
+        { 
+            _isCrossway = true;           //that means it is a cross Roade
         
+
+        }
+
         if (collider.gameObject.tag == "Player")     //if the player enters the collider
         {
+           
             if (EndPoints != null)     //if there is an end point
             {
+               // print(EndPoints.Count);
                
                 List<Land> temp = new List<Land>();      //create temperarly list to delete later 
                 while (EndPoints.Count > 0)            //as long as there is an end point
                 {
-                    if (EndPoints[0]._nextStraight)  //if the straight bool is true 
+                    if(EndPoints[0] == null)
                     {
+                        EndPoints.RemoveAt(0);
+                        continue;
+                    }
+                 print("after if there is" + temp.Count);
+                   if (EndPoints[0]._nextStraight)  //if the straight bool is true 
+                   {
+                       temp.AddRange(LandManager.CreateNext(EndPoints[0], 0 ));  //add a block with a straight case
                        
-                        temp.AddRange(LandManager.CreateNext(EndPoints[0], 0 ));  //add a block with a straight case 
-                    }
-                    else    //if not true
-                    {
-                        temp.AddRange(LandManager.CreateNext(EndPoints[0], GetPossibleDirections(EndPoints[0])));  //add another block
-                    }
-                    
+                   }
+                   else    //if not true
+                   {
+                       if (GetPossibleDirections(EndPoints[0]).Length > 0)
+                           temp.AddRange(LandManager.CreateNext(EndPoints[0], GetPossibleDirections(EndPoints[0])));  //add another block
+                       else
+                            temp.AddRange(LandManager.CreateNext(EndPoints[0], GetPossibleDirections(EndPoints[0])));
+                        print("Invalid Endpoint");
+                   }
+
+                 
+
                     EndPoints.RemoveAt(0);  //after we created a block after the endpoint it no longer is an endpoint, so we remove it
                 }
+                if (temp.Count == 0)
+                    throw new System.Exception("end of endpoints");
 
-                EndPoints = temp;   //add the end point to the temperarly list to delete it later 
+                // if there is more then one endpoint mix the order
+                if(temp.Count > 1)
+                {
+                    List<Land> temp_mix = new List<Land>();
+                    while(temp.Count > 0)
+                    {
+                        var rnd = Random.Range(0, temp.Count);
+                        temp_mix.Add(temp[rnd]);
+                        temp.RemoveAt(rnd);
+                    }
+                    temp.AddRange(temp_mix);
+                }
+
+                EndPoints = temp;   // save the new enpoints in the list
 
             }
             else     //if the list is empty
@@ -81,6 +129,7 @@ public class Land : MonoBehaviour {
                 EndPoints = LandManager.CreateNext(GetComponent<Land>(), GetPossibleDirections(this));  //add a land script to add a block
             }
             
+
             if (Root != null && Root.Root != null && Root.Root.Root != null)   //if the last block is there and the one before
                 LandManager.DeleteLand(Root.Root.Root, Root.Root);  //delet and remove the one befor the last one
         }
@@ -91,7 +140,7 @@ public class Land : MonoBehaviour {
     {
         if (EndPoints == null)          //if the end point is not there
             EndPoints = new List<Land>();    //more like init list EndPoints is a Land < List > it just isnt initialized(if its null)
-        EndPoints.Add(l);  // add one end point 
+            EndPoints.Add(l);  // add one end point 
     }
 
     /// <summary>
@@ -119,6 +168,7 @@ public class Land : MonoBehaviour {
         {
             dirs.Add(3);
         }
+
         return dirs.ToArray();
     }
       
